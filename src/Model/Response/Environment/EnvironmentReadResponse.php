@@ -10,8 +10,6 @@ use App\Model\Response\App\AppReadResponse;
 
 class EnvironmentReadResponse extends AbstractResponse
 {
-    public int $id;
-
     public string $name;
 
     public string $publicId;
@@ -25,7 +23,6 @@ class EnvironmentReadResponse extends AbstractResponse
         assert($entity instanceof Environment);
         $response = new self();
 
-        $response->id = $entity->getId();
         $response->name = $entity->getName();
         $response->phpVersion = $entity->getPhpVersion();
         $response->publicId = $entity->getPublicId();

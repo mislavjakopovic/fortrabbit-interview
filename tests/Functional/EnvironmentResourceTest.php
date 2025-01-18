@@ -40,7 +40,7 @@ class EnvironmentResourceTest extends AbstractTestCase
         $app = AppFactory::createOne();
         $environment = EnvironmentFactory::createOne(['app' => $app]);
 
-        $client->request('GET', '/api/environment/' . $environment->getId());
+        $client->request('GET', '/api/environment/' . $environment->getPublicId());
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -187,7 +187,7 @@ class EnvironmentResourceTest extends AbstractTestCase
         $app = AppFactory::createOne();
         $environment = EnvironmentFactory::createOne(['app' => $app]);
 
-        $client->request('DELETE', '/api/environment/' . $environment->getId());
+        $client->request('DELETE', '/api/environment/' . $environment->getPublicId());
         $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
 

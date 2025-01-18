@@ -59,9 +59,9 @@ final readonly class EnvironmentManager
         return empty($this->environmentRepository->findOneBy(['id' => $id]));
     }
 
-    public function findById(int $id): ?Environment
+    public function findByPublicId(string $publicId): ?Environment
     {
-        return $this->environmentRepository->find($id);
+        return $this->environmentRepository->findOneBy(['publicId' => $publicId]);
     }
 
     public function findAll(): array

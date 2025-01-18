@@ -10,8 +10,6 @@ use App\Model\Response\Environment\EnvironmentReadResponse;
 
 class AppReadResponse extends AbstractResponse
 {
-    public int $id;
-
     public string $name;
 
     public string $publicId;
@@ -24,7 +22,6 @@ class AppReadResponse extends AbstractResponse
         assert($entity instanceof App);
         $response = new self();
 
-        $response->id = $entity->getId();
         $response->name = $entity->getName();
         $response->publicId = $entity->getPublicId();
 

@@ -66,10 +66,10 @@ final class AppController extends AbstractApiController
         response: Response::HTTP_NOT_FOUND,
         description: 'Unable to find requested app resource.',
     )]
-    #[Route('/app/{id}', methods: [Request::METHOD_GET])]
-    public function read(int $id): JsonResponse
+    #[Route('/app/{publicId}', methods: [Request::METHOD_GET])]
+    public function read(string $publicId): JsonResponse
     {
-        $app = $this->appManager->findById($id);
+        $app = $this->appManager->findByPublicId($publicId);
 
         if (!$app instanceof App) {
             throw new NotFoundHttpException('App not found.');
@@ -90,10 +90,10 @@ final class AppController extends AbstractApiController
         response: Response::HTTP_NOT_FOUND,
         description: 'Unable to find requested app resource for deletion.',
     )]
-    #[Route('/app/{id}', methods: [Request::METHOD_DELETE])]
-    public function delete(int $id): JsonResponse
+    #[Route('/app/{publicId}', methods: [Request::METHOD_DELETE])]
+    public function delete(string $publicId): JsonResponse
     {
-        $app = $this->appManager->findById($id);
+        $app = $this->appManager->findByPublicId($publicId);
 
         if (!$app instanceof App) {
             throw new NotFoundHttpException('App not found.');

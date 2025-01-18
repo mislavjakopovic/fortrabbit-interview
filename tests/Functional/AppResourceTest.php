@@ -37,7 +37,7 @@ class AppResourceTest extends AbstractTestCase
         $client = static::createClient();
         $app = AppFactory::createOne();
 
-        $client->request('GET', '/api/app/' . $app->getId());
+        $client->request('GET', '/api/app/' . $app->getPublicId());
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $response = $this->getResponseData();
 
@@ -50,7 +50,7 @@ class AppResourceTest extends AbstractTestCase
         $app = AppFactory::createOne();
         EnvironmentFactory::createMany(3, ['app' => $app]);
 
-        $client->request('GET', '/api/app/' . $app->getId());
+        $client->request('GET', '/api/app/' . $app->getPublicId());
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $response = $this->getResponseData();
 
@@ -130,7 +130,7 @@ class AppResourceTest extends AbstractTestCase
         $client = static::createClient();
         $app = AppFactory::createOne();
 
-        $client->request('DELETE', '/api/app/' . $app->getId());
+        $client->request('DELETE', '/api/app/' . $app->getPublicId());
         $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
 

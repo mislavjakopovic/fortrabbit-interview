@@ -70,10 +70,10 @@ final class EnvironmentController extends AbstractApiController
         response: Response::HTTP_NOT_FOUND,
         description: 'Unable to find requested environment resource.',
     )]
-    #[Route('/environment/{id}', methods: [Request::METHOD_GET])]
-    public function read(int $id): JsonResponse
+    #[Route('/environment/{publicId}', methods: [Request::METHOD_GET])]
+    public function read(string $publicId): JsonResponse
     {
-        $environment = $this->environmentManager->findById($id);
+        $environment = $this->environmentManager->findByPublicId($publicId);
 
         if (!$environment instanceof Environment) {
             throw new NotFoundHttpException('Environment not found.');
@@ -94,10 +94,10 @@ final class EnvironmentController extends AbstractApiController
         response: Response::HTTP_NOT_FOUND,
         description: 'Unable to find requested environment resource for deletion.',
     )]
-    #[Route('/environment/{id}', methods: [Request::METHOD_DELETE])]
-    public function delete(int $id): JsonResponse
+    #[Route('/environment/{publicId}', methods: [Request::METHOD_DELETE])]
+    public function delete(string $publicId): JsonResponse
     {
-        $environment = $this->environmentManager->findById($id);
+        $environment = $this->environmentManager->findByPublicId($publicId);
 
         if (!$environment instanceof Environment) {
             throw new NotFoundHttpException('Environment not found.');

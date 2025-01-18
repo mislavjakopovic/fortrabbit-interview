@@ -47,9 +47,9 @@ final readonly class AppManager
         return empty($this->appRepository->findOneBy(['id' => $id]));
     }
 
-    public function findById(int $id): ?App
+    public function findByPublicId(string $publicId): ?App
     {
-        return $this->appRepository->find($id);
+        return $this->appRepository->findOneBy(['publicId' => $publicId]);
     }
 
     public function findAll(): array
