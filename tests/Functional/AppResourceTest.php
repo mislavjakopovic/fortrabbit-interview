@@ -16,7 +16,7 @@ class AppResourceTest extends AbstractTestCase
         $client = static::createClient();
         AppFactory::createMany(3);
 
-        $client->request('GET', '/api/apps');
+        $client->request('GET', '/api/app');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $response = $this->getResponseData();
 
@@ -28,7 +28,7 @@ class AppResourceTest extends AbstractTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/apps');
+        $client->request('GET', '/api/app');
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 

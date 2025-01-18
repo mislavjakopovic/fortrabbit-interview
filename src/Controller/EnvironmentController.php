@@ -9,6 +9,8 @@ use App\Manager\EnvironmentManager;
 use App\Model\Request\Environment\EnvironmentCreateRequest;
 use App\Model\Response\Environment\EnvironmentCollectionResponse;
 use App\Model\Response\Environment\EnvironmentReadResponse;
+use Nelmio\ApiDocBundle\Attribute\Model;
+use OpenApi\Attributes as OA;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +26,22 @@ final class EnvironmentController extends AbstractApiController
     ) {
     }
 
+    #[OA\Tag(name: 'environment')]
+    #[OA\RequestBody(
+        content: new Model(type: EnvironmentCreateRequest::class)
+    )]
+    #[OA\Response(
+        response: Response::HTTP_CREATED,
+        description: 'Successfully created new environment resource.',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: EnvironmentReadResponse::class))
+        )
+    )]
+    #[OA\Response(
+        response: Response::HTTP_BAD_REQUEST,
+        description: 'Validation failed while creating new environment resource.',
+    )]
     #[Route('/environment', methods: [Request::METHOD_POST])]
     public function create(#[MapRequestPayload] EnvironmentCreateRequest $request): JsonResponse
     {
@@ -39,6 +57,19 @@ final class EnvironmentController extends AbstractApiController
         );
     }
 
+    #[OA\Tag(name: 'environment')]
+    #[OA\Response(
+        response: Response::HTTP_OK,
+        description: 'Successfully retrieved requested environment resource.',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: EnvironmentReadResponse::class))
+        )
+    )]
+    #[OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'Unable to find requested environment resource.',
+    )]
     #[Route('/environment/{id}', methods: [Request::METHOD_GET])]
     public function read(int $id): JsonResponse
     {
@@ -54,6 +85,15 @@ final class EnvironmentController extends AbstractApiController
         );
     }
 
+    #[OA\Tag(name: 'environment')]
+    #[OA\Response(
+        response: Response::HTTP_NO_CONTENT,
+        description: 'Successfully deleted requested environment resource.'
+    )]
+    #[OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'Unable to find requested environment resource for deletion.',
+    )]
     #[Route('/environment/{id}', methods: [Request::METHOD_DELETE])]
     public function delete(int $id): JsonResponse
     {
@@ -72,7 +112,20 @@ final class EnvironmentController extends AbstractApiController
         );
     }
 
-    #[Route('/environments', methods: [Request::METHOD_GET])]
+    #[OA\Tag(name: 'environment')]
+    #[OA\Response(
+        response: Response::HTTP_OK,
+        description: 'Successfully retrieved collection of requested environment resources.',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: EnvironmentCollectionResponse::class))
+        )
+    )]
+    #[OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'Unable to find any requested environment resources.',
+    )]
+    #[Route('/environment', methods: [Request::METHOD_GET])]
     public function collection(): Response
     {
         $environments = $this->environmentManager->findAll();

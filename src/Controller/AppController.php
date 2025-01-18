@@ -9,6 +9,8 @@ use App\Manager\AppManager;
 use App\Model\Request\App\AppCreateRequest;
 use App\Model\Response\App\AppCollectionResponse;
 use App\Model\Response\App\AppReadResponse;
+use Nelmio\ApiDocBundle\Attribute\Model;
+use OpenApi\Attributes as OA;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +26,22 @@ final class AppController extends AbstractApiController
     ) {
     }
 
+    #[OA\Tag(name: 'app')]
+    #[OA\RequestBody(
+        content: new Model(type: AppCreateRequest::class)
+    )]
+    #[OA\Response(
+        response: Response::HTTP_CREATED,
+        description: 'Successfully created new app resource.',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: AppReadResponse::class))
+        )
+    )]
+    #[OA\Response(
+        response: Response::HTTP_BAD_REQUEST,
+        description: 'Validation failed while creating new app resource.',
+    )]
     #[Route('/app', methods: [Request::METHOD_POST])]
     public function create(#[MapRequestPayload] AppCreateRequest $request): JsonResponse
     {
@@ -35,6 +53,19 @@ final class AppController extends AbstractApiController
         );
     }
 
+    #[OA\Tag(name: 'app')]
+    #[OA\Response(
+        response: Response::HTTP_OK,
+        description: 'Successfully retrieved requested app resource.',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: AppReadResponse::class))
+        )
+    )]
+    #[OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'Unable to find requested app resource.',
+    )]
     #[Route('/app/{id}', methods: [Request::METHOD_GET])]
     public function read(int $id): JsonResponse
     {
@@ -50,6 +81,15 @@ final class AppController extends AbstractApiController
         );
     }
 
+    #[OA\Tag(name: 'app')]
+    #[OA\Response(
+        response: Response::HTTP_NO_CONTENT,
+        description: 'Successfully deleted requested app resource.'
+    )]
+    #[OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'Unable to find requested app resource for deletion.',
+    )]
     #[Route('/app/{id}', methods: [Request::METHOD_DELETE])]
     public function delete(int $id): JsonResponse
     {
@@ -68,7 +108,20 @@ final class AppController extends AbstractApiController
         );
     }
 
-    #[Route('/apps', methods: [Request::METHOD_GET])]
+    #[OA\Tag(name: 'app')]
+    #[OA\Response(
+        response: Response::HTTP_OK,
+        description: 'Successfully retrieved collection of requested app resources.',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: AppCollectionResponse::class))
+        )
+    )]
+    #[OA\Response(
+        response: Response::HTTP_NOT_FOUND,
+        description: 'Unable to find any requested app resources.',
+    )]
+    #[Route('/app', methods: [Request::METHOD_GET])]
     public function collection(): Response
     {
         $apps = $this->appManager->findAll();

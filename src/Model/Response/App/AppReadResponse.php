@@ -16,6 +16,7 @@ class AppReadResponse extends AbstractResponse
 
     public string $publicId;
 
+    /** @var EnvironmentReadResponse[] */
     public ?array $environments = null;
 
     public static function fromEntity(object $entity, bool $embed = true): self

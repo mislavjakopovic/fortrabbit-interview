@@ -18,7 +18,7 @@ class EnvironmentResourceTest extends AbstractTestCase
         $app = AppFactory::createOne();
         EnvironmentFactory::createMany(3, ['app' => $app]);
 
-        $client->request('GET', '/api/environments');
+        $client->request('GET', '/api/environment');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $response = $this->getResponseData();
 
@@ -30,7 +30,7 @@ class EnvironmentResourceTest extends AbstractTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/environments');
+        $client->request('GET', '/api/environment');
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 
