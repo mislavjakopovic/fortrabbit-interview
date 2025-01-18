@@ -8,7 +8,7 @@ use App\Entity\Environment;
 use App\Repository\AppRepository;
 use App\Repository\EnvironmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -29,7 +29,7 @@ final readonly class EnvironmentManager
     ): Environment {
         $app = $this->appRepository->findOneBy(['publicId' => $appPublicId]);
         if (empty($app)) {
-            throw new BadRequestException('App with public ID ' . $appPublicId . ' not found.');
+            throw new BadRequestHttpException('App with public ID ' . $appPublicId . ' not found.');
         }
 
         $environment = new Environment();
@@ -40,7 +40,7 @@ final readonly class EnvironmentManager
 
         $errors = $this->validator->validate($environment);
         if (count($errors) > 0) {
-            throw new BadRequestException((string)$errors);
+            throw new BadRequestHttpException((string)$errors);
         }
 
         $this->entityManager->persist($environment);

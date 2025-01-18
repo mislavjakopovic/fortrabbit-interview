@@ -7,7 +7,7 @@ namespace App\Manager;
 use App\Entity\App;
 use App\Repository\AppRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -28,7 +28,7 @@ final readonly class AppManager
 
         $errors = $this->validator->validate($app);
         if (count($errors) > 0) {
-            throw new BadRequestException((string)$errors);
+            throw new BadRequestHttpException((string)$errors);
         }
 
         $this->entityManager->persist($app);
