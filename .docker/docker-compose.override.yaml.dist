@@ -1,0 +1,7 @@
+services:
+    nginx-fortrabbit-interview:
+        ports:
+            - '25080:80'
+    mariadb-fortrabbit-interview:
+        ports:
+            - '25306:3306'

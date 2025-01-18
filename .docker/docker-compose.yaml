@@ -1,0 +1,36 @@
+services:
+    nginx-fortrabbit-interview:
+        build:
+            context: .docker/image/nginx
+        depends_on:
+            - php-fortrabbit-interview
+            - mariadb-fortrabbit-interview
+        volumes:
+            - ./:/var/www/fortrabbit-interview/backend
+        working_dir: /var/www/fortrabbit-interview/backend
+        entrypoint: .docker/bin/entrypoint/nginx.sh
+        command: [ 'nginx' ]
+
+    php-fortrabbit-interview:
+        build:
+            context: .docker/image/php
+        depends_on:
+            - mariadb-fortrabbit-interview
+        volumes:
+            - ./:/var/www/fortrabbit-interview/backend
+        working_dir: /var/www/fortrabbit-interview/backend
+        entrypoint: .docker/bin/entrypoint/php.sh
+        command: [ 'php-fpm' ]
+
+    mariadb-fortrabbit-interview:
+        build:
+            context: .docker/image/mariadb
+        env_file:
+            - .env
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+        volumes:
+            - volume-mariadb-fortrabbit-interview:/var/lib/mysql
+
+volumes:
+    volume-mariadb-fortrabbit-interview:
