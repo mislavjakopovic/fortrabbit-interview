@@ -20,18 +20,12 @@ RUN $apt_get_install ca-certificates
 RUN $apt_get_install wait-for-it
 RUN $apt_get_install cron
 RUN $apt_get_install g++
-RUN $apt_get_install zlib1g-dev
-RUN $apt_get_install libzip-dev
-RUN $apt_get_install libonig-dev
 RUN $apt_get_install libicu-dev
-RUN $apt_get_install libbz2-dev
 
 # Install PHP extensions
 ARG php_ext_install="docker-php-ext-install"
 RUN $php_ext_install pdo_mysql
 RUN $php_ext_install intl
-RUN $php_ext_install bz2
-RUN $php_ext_install zip
 RUN $php_ext_install opcache
 
 # Configure for service
@@ -49,6 +43,7 @@ RUN chmod 755 /usr/local/bin/composer
 # Configure miscellaneous settings
 RUN ln -snf /usr/share/zoneinfo/Europe/Prague /etc/localtime
 RUN echo 'alias ll="ls -alk"' >> ~/.bashrc
+RUN git config --global --add safe.directory /var/www/fortrabbit-interview/backend
 
 # Expose ports to Docker network
 EXPOSE 9000
