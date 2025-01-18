@@ -9,8 +9,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppRepository::class)]
+#[UniqueEntity('publicId')]
+#[UniqueEntity('name')]
 class App
 {
     #[ORM\Id]
@@ -18,14 +22,16 @@ class App
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
+    #[Assert\Length(exactly: 6)]
     #[ORM\Column(type: Types::STRING, length: 6)]
     private ?string $publicId = null;
 
+    #[Assert\Length(min: 3, max: 20)]
     #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $name = null;
 
     /** @var Collection<int, Environment> */
-    #[ORM\OneToMany(targetEntity: Environment::class, mappedBy: 'app')]
+    #[ORM\OneToMany(targetEntity: Environment::class, mappedBy: 'app', cascade: ['remove'])]
     private Collection $environments;
 
     public function __construct()

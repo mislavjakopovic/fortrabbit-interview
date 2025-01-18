@@ -9,8 +9,12 @@ use App\Repository\EnvironmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EnvironmentRepository::class)]
+#[UniqueEntity('publicId')]
+#[UniqueEntity('name')]
 class Environment
 {
     #[ORM\Id]
@@ -18,9 +22,11 @@ class Environment
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
+    #[Assert\Length(exactly: 6)]
     #[ORM\Column(type: Types::STRING, length: 6)]
     private ?string $publicId = null;
 
+    #[Assert\Length(min: 3, max: 20)]
     #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $name = null;
 
