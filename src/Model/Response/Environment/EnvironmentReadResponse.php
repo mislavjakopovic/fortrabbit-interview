@@ -16,6 +16,8 @@ class EnvironmentReadResponse extends AbstractResponse
 
     public string $publicId;
 
+    public string $phpVersion;
+
     public ?AppReadResponse $app = null;
 
     public static function fromEntity(object $entity, bool $embed = true): self
@@ -25,6 +27,7 @@ class EnvironmentReadResponse extends AbstractResponse
 
         $response->id = $entity->getId();
         $response->name = $entity->getName();
+        $response->phpVersion = $entity->getPhpVersion();
         $response->publicId = $entity->getPublicId();
 
         if (true === $embed) {
