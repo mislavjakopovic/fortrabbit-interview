@@ -1,0 +1,12 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: fortrabbit-interview
+            description: API documentation of app made for fortrabbit interview.
+            version: 1.0.0
+        servers:
+            - url: http://localhost:25080
+              description: localhost
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
