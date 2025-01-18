@@ -21,7 +21,7 @@ final class AppFactory extends PersistentProxyObjectFactory
     {
         return [
             'publicId' => substr(md5(self::faker()->randomAscii()), 0, 6),
-            'name' => self::faker()->word().' app',
+            'name' => self::faker()->word() . ' app',
         ];
     }
 

@@ -21,19 +21,19 @@ final class EnvironmentFixturesStory extends Story
             'name' => 'dev env',
             'publicId' => '654321',
             'phpVersion' => PhpVersionType::PHP_8_1,
-            'app' => '123456'
+            'app' => '123456',
         ],
         [
             'name' => 'stage env',
             'publicId' => 'fedcba',
             'phpVersion' => PhpVersionType::PHP_8_2,
-            'app' => 'abcdef'
+            'app' => 'abcdef',
         ],
         [
             'name' => 'preview env',
             'publicId' => '321cba',
             'phpVersion' => PhpVersionType::PHP_8_3,
-            'app' => 'abc123'
+            'app' => 'abc123',
         ],
     ];
 
@@ -50,7 +50,8 @@ final class EnvironmentFixturesStory extends Story
                     ->with(
                         !empty($app) ? ['app' => $app] : []
                     )
-                    ->create();
+                    ->create()
+                ;
                 ++$counter;
             }
 
@@ -61,7 +62,8 @@ final class EnvironmentFixturesStory extends Story
                     ->with([
                         'app' => $app[0],
                     ])
-                    ->create();
+                    ->create()
+                ;
             }
         });
     }

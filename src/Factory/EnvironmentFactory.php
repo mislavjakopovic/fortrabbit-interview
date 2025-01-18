@@ -22,8 +22,8 @@ final class EnvironmentFactory extends PersistentProxyObjectFactory
     {
         return [
             'publicId' => substr(md5(self::faker()->randomAscii()), 0, 6),
-            'name' => self::faker()->word().' env',
-            'phpVersion' => self::faker()->randomElement(PhpVersionType::getChoices())
+            'name' => self::faker()->word() . ' env',
+            'phpVersion' => self::faker()->randomElement(PhpVersionType::getChoices()),
         ];
     }
 
