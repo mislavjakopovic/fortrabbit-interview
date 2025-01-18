@@ -71,6 +71,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "friendsofphp/php-cs-fixer": "^3.68",
+        "kubawerlos/php-cs-fixer-custom-fixers": "^3.22",
         "zenstruck/foundry": "^2.3"
     }
 }
