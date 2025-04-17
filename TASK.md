@@ -43,5 +43,5 @@ Create a Symfony CLI command to seed the database with a few randomized objects
 - This should not take longer than a day of work.
 
 ## When you are done
-- Upload your code to a fork of this repo, or to a private personal repo and add @erinbit as collaborator
+- Upload your code to a fork of this repo, or to a private personal repo and add **redacted** as collaborator
 - Send us an email and we will review the code and then invite you to a short video call about it
